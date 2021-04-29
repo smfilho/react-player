@@ -9,12 +9,16 @@
 .time-control {
   width: 50%;
   display: flex;
+  .p_start-time {
+    padding: 1rem;
+  }
   input {
     width: 100%;
     padding: 1rem 2rem;
   }
-  p {
-    padding: 1rem;
+
+  .p_end-time {
+    padding: 1rem 0 1rem 1.5rem;
   }
 }
 

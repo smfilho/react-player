@@ -11,7 +11,7 @@ import data from './data';
 function App() {
   // State
   const [songs, setSongs] = useState(data());
-  const [currentSong, setCurrentSong] = useState(songs[7]);
+  const [currentSong, setCurrentSong] = useState(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ function App() {
         setIsPlaying={setIsPlaying}
         currentSong={currentSong}
       />
-      <Library songs={songs} />
+      <Library songs={songs} setCurrentSong={setCurrentSong} />
     </div>
   );
 }

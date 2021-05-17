@@ -10,6 +10,11 @@ import {
 const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
   const audioRef = useRef(null);
 
+  const [songInfo, setSongInfo] = useState({
+    currentTime: 0,
+    duration: 0,
+  });
+
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -36,11 +41,6 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
     audioRef.current.currentTime = e.target.value;
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
-
-  const [songInfo, setSongInfo] = useState({
-    currentTime: 0,
-    duration: 0,
-  });
 
   return (
     <div className='player'>

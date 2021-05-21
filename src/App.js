@@ -42,6 +42,7 @@ function App() {
         songs={songs}
         setCurrentSong={setCurrentSong}
         isPlaying={isPlaying}
+        setSongs={setSongs}
       />
       <audio
         onTimeUpdate={timeUpdateHandler}

@@ -5,6 +5,7 @@ import {
   faAngleRight,
   faPause,
 } from '@fortawesome/free-solid-svg-icons';
+import { playAudio } from '../util';
 
 const Player = ({
   audioRef,
@@ -45,24 +46,33 @@ const Player = ({
     if (direction === 'skip-back') {
       if ((currentIndex - 1) % songs.length === -1) {
         setCurrentSong(songs[songs.length - 1]);
+        playAudio(isPlaying, audioRef);
         return;
       }
       setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
+    playAudio(isPlaying, audioRef);
+  };
+  //Adding style to song duration bar
+  const trackAnim = {
+    transform: `translateX(${songInfo.animationPercentage}%)`,
   };
 
   return (
     <div className='player'>
       <div className='time-control'>
-        <p className='p_start-time'>{getTime(songInfo.currentTime)}</p>
-        <input
-          min={0}
-          max={songInfo.duration || 0}
-          value={songInfo.currentTime}
-          onChange={dragHandler}
-          type='range'
-        />
-        <p className='p_end-time'>{getTime(songInfo.duration)}</p>
+        <p>{getTime(songInfo.currentTime)}</p>
+        <div className='track'>
+          <input
+            min={0}
+            max={songInfo.duration || 0}
+            value={songInfo.currentTime}
+            onChange={dragHandler}
+            type='range'
+          />
+          <div style={trackAnim} className='animated-track'></div>
+        </div>
+        <p>{songInfo.duration ? getTime(songInfo.duration) : '0:00'}</p>
       </div>
       <div className='play-control'>
         <FontAwesomeIcon

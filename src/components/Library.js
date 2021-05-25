@@ -2,6 +2,7 @@ import LibrarySong from './LibrarySong';
 
 const Library = ({
   songs,
+  currentSong,
   setCurrentSong,
   audioRef,
   isPlaying,
@@ -17,6 +18,7 @@ const Library = ({
             key={song.id}
             id={song.id}
             songs={songs}
+            currentSong={currentSong}
             setCurrentSong={setCurrentSong}
             song={song}
             audioRef={audioRef}

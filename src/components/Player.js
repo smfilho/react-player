@@ -70,7 +70,7 @@ const Player = ({
             onChange={dragHandler}
             type='range'
           />
-          <div style={trackAnim} className='animated-track'></div>
+          <div style={trackAnim} className='animate-track'></div>
         </div>
         <p>{songInfo.duration ? getTime(songInfo.duration) : '0:00'}</p>
       </div>

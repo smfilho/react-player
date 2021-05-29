@@ -1,5 +1,3 @@
-import { playAudio } from '../util';
-
 const LibrarySong = ({
   song,
   setCurrentSong,
@@ -11,7 +9,7 @@ const LibrarySong = ({
     setCurrentSong(song);
 
     // Check if the song is playing
-    playAudio(isPlaying, audioRef);
+    if (isPlaying) audioRef.current.play();
   };
 
   return (

@@ -16,7 +16,6 @@ const Library = ({
         {songs.map(song => (
           <LibrarySong
             key={song.id}
-            id={song.id}
             songs={songs}
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}

@@ -17,19 +17,28 @@ const Player = ({
   setCurrentSong,
 }) => {
   const playSongHandler = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(!isPlaying);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(!isPlaying);
-    }
+    // setIsPlaying(!isPlaying);
+    // audioRef.current[isPlaying ? 'pause' : 'play']();
+    isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    setIsPlaying(!isPlaying);
+    // if (isPlaying) {
+    //   audioRef.current.pause();
+    //   setIsPlaying(!isPlaying);
+    // } else {
+    //   audioRef.current.play();
+    //   setIsPlaying(!isPlaying);
+    // }
   };
 
   const getTime = time => {
-    return (
-      Math.floor(time / 60) + ':' + ('0' + Math.floor(time % 60)).slice(-2)
-    );
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    const secondsWithZero = String(seconds).padStart(2, '0');
+    return `${minutes}:${secondsWithZero}`;
+    // return (
+    //   Math.floor(time / 60) + ':' + ('0' + Math.floor(time % 60)).slice(-2)
+
+    // );
   };
 
   const dragHandler = e => {
@@ -38,19 +47,25 @@ const Player = ({
   };
 
   const skipTrackHandler = async direction => {
-    let currentIndex = songs.findIndex(song => song.id === currentSong.id);
-    if (direction === 'skip-forward') {
-      await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
-    }
-    if (direction === 'skip-back') {
-      if ((currentIndex - 1) % songs.length === -1) {
-        setCurrentSong(songs[songs.length - 1]);
-        if (isPlaying) audioRef.current.play();
-        return;
-      }
-      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
-    }
+    //let currentIndex = songs.findIndex(song => song.id === currentSong.id);
+    let currentIndex = songs.indexOf(currentSong);
+    await setCurrentSong(
+      songs[(currentIndex + direction + songs.length) % songs.length]
+    );
     if (isPlaying) audioRef.current.play();
+    // let currentIndex = songs.findIndex(song => song.id === currentSong.id);
+    // if (direction === 'skip-forward') {
+    //   await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    // }
+    // if (direction === 'skip-back') {
+    //   if ((currentIndex - 1) % songs.length === -1) {
+    //     await setCurrentSong(songs[songs.length - 1]);
+    //     if (isPlaying) audioRef.current.play();
+    //     return;
+    //   }
+    //   setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+    //   // if (isPlaying) audioRef.current.play();
+    // }
   };
   //Adding style to song duration bar
   const trackAnim = {
@@ -80,7 +95,7 @@ const Player = ({
       </div>
       <div className='play-control'>
         <FontAwesomeIcon
-          onClick={() => skipTrackHandler('skip-back')}
+          onClick={() => skipTrackHandler(-1)}
           className='skip-back'
           size='2x'
           icon={faAngleLeft}
@@ -92,7 +107,7 @@ const Player = ({
           icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon
-          onClick={() => skipTrackHandler('skip-forward')}
+          onClick={() => skipTrackHandler(1)}
           className='skip-forward'
           size='2x'
           icon={faAngleRight}

@@ -71,7 +71,7 @@ function App() {
       />
       <audio
         onTimeUpdate={timeUpdateHandler}
-        onLoadedMetadata={timeUpdateHandler}
+        onLoadedMetadata={timeUpdateHandler} // When loads up, update the end time element right away, instead of waiting for pressing play to update the end time
         ref={audioRef}
         src={currentSong.audio}
         onEnded={songEndHandler}

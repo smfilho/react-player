@@ -25,7 +25,7 @@ function App() {
 
   const timeUpdateHandler = e => {
     const current = e.target.currentTime;
-    const duration = e.target.duration;
+    const duration = e.target.duration || 0;
     //Calculating Percentage of song played so far
     const roundedCurrent = Math.round(current);
     const roundedDuration = Math.round(duration);
@@ -39,11 +39,19 @@ function App() {
   };
 
   const songEndHandler = async () => {
-    let currentIndex = songs.findIndex(song => song.id === currentSong.id);
+    let currentIndex = songs.indexOf(currentSong);
+    //let currentIndex = songs.findIndex(song => song.id === currentSong.id);
 
     await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
 
-    if (isPlaying) audioRef.current.play();
+    if (isPlaying) {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(audio => {
+          audioRef.current.play();
+        });
+      }
+    }
   };
 
   return (

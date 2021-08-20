@@ -7,7 +7,14 @@ const LibrarySong = ({
 }) => {
   const songSelectHandler = () => {
     setCurrentSong(song);
-    if (isPlaying) audioRef.current.play();
+    if (isPlaying) {
+      const playPromise = audioRef.current.play();
+      if (isPlaying !== undefined) {
+        playPromise.then(audio => {
+          audioRef.current.play();
+        });
+      }
+    }
   };
 
   return (

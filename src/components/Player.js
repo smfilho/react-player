@@ -52,7 +52,14 @@ const Player = ({
     await setCurrentSong(
       songs[(currentIndex + direction + songs.length) % songs.length]
     );
-    if (isPlaying) audioRef.current.play();
+    if (isPlaying) {
+      const playPromise = audioRef.current.play();
+      if (isPlaying !== undefined) {
+        playPromise.then(audio => {
+          audioRef.current.play();
+        });
+      }
+    }
     // let currentIndex = songs.findIndex(song => song.id === currentSong.id);
     // if (direction === 'skip-forward') {
     //   await setCurrentSong(songs[(currentIndex + 1) % songs.length]);

@@ -21,6 +21,13 @@
   }
 }
 
+.volume-control {
+  width: 50%;
+  -webkit-appearance: slider-horizontal;
+  background: slategray;
+  cursor: pointer;
+}
+
 .play-control {
   width: 30%;
   display: flex;
